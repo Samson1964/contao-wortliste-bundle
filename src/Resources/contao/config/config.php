@@ -11,7 +11,7 @@
  * @copyright Frank Hoppe 2014
  */
 
-$GLOBALS['BE_MOD']['content']['schiedsrichter'] = array
+$GLOBALS['BE_MOD']['content']['wortliste'] = array
 (
 	'tables'         => array('tl_wortliste'),
 	'icon'           => 'bundles/contaowortliste/images/icon.png',

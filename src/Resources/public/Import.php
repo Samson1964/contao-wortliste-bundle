@@ -39,17 +39,17 @@ class Import
 			//// Tabelle sr-person der Ergebnisdienst-Datenbank auslesen
 			$objImportDB = \Database::getInstance(array
 			(
-				'dbHost'     => $GLOBALS['TL_CONFIG']['schiedsrichter_host'],
-				'dbUser'     => $GLOBALS['TL_CONFIG']['schiedsrichter_user'],
-				'dbPass'     => $GLOBALS['TL_CONFIG']['schiedsrichter_pass'],
-				'dbDatabase' => $GLOBALS['TL_CONFIG']['schiedsrichter_db']
+				'dbHost'     => $GLOBALS['TL_CONFIG']['wortliste_host'],
+				'dbUser'     => $GLOBALS['TL_CONFIG']['wortliste_user'],
+				'dbPass'     => $GLOBALS['TL_CONFIG']['wortliste_pass'],
+				'dbDatabase' => $GLOBALS['TL_CONFIG']['wortliste_db']
 			));
 
 			$objSchiedsrichter = $objImportDB->prepare('SELECT * FROM `sr-person`')
 			                                 ->execute();
 
 			// Alle alten Datensätze auf unveröffentlicht setzen
-			$objDB = \Database::getInstance()->prepare('UPDATE tl_schiedsrichter SET published = ?')
+			$objDB = \Database::getInstance()->prepare('UPDATE tl_wortliste SET published = ?')
 			                                 ->execute(0);
 
 			// Import beginnen
@@ -63,7 +63,7 @@ class Import
 					// Suchen nach PKZ
 					if($objSchiedsrichter->PKZ)
 					{
-						$objDB = \Database::getInstance()->prepare('SELECT * FROM tl_schiedsrichter WHERE pkz = ?')
+						$objDB = \Database::getInstance()->prepare('SELECT * FROM tl_wortliste WHERE pkz = ?')
 						                                 ->limit(1)
 						                                 ->execute($objSchiedsrichter->PKZ);
 						if($objDB->numRows)
@@ -75,7 +75,7 @@ class Import
 					// Noch nichts gefunden, deshalb Suchen nach FIDE-ID
 					if($objSchiedsrichter->FIDE_ID && !$found)
 					{
-						$objDB = \Database::getInstance()->prepare('SELECT * FROM tl_schiedsrichter WHERE fide_id = ?')
+						$objDB = \Database::getInstance()->prepare('SELECT * FROM tl_wortliste WHERE fide_id = ?')
 						                                 ->limit(1)
 						                                 ->execute($objSchiedsrichter->FIDE_ID);
 						if($objDB->numRows)
@@ -87,7 +87,7 @@ class Import
 					// Noch nichts gefunden, deshalb Suchen nach Lizenznummer
 					if($objSchiedsrichter->Lizenz_Nr && !$found)
 					{
-						$objDB = \Database::getInstance()->prepare('SELECT * FROM tl_schiedsrichter WHERE nr = ?')
+						$objDB = \Database::getInstance()->prepare('SELECT * FROM tl_wortliste WHERE nr = ?')
 						                                 ->limit(1)
 						                                 ->execute($objSchiedsrichter->Lizenz_Nr);
 						if($objDB->numRows)
@@ -133,7 +133,7 @@ class Import
 					if($found)
 					{
 						// Datensatz aktualisieren
-						$objDB = \Database::getInstance()->prepare('UPDATE tl_schiedsrichter %s WHERE id = ?')
+						$objDB = \Database::getInstance()->prepare('UPDATE tl_wortliste %s WHERE id = ?')
 						                                 ->set($set)
 						                                 ->execute($objDB->id);
 						echo ' ... aktualisiert';
@@ -141,7 +141,7 @@ class Import
 					else
 					{
 						// Neuen Datensatz anlegen
-						$objDB = \Database::getInstance()->prepare('INSERT INTO tl_schiedsrichter %s')
+						$objDB = \Database::getInstance()->prepare('INSERT INTO tl_wortliste %s')
 						                                 ->set($set)
 						                                 ->execute();
 						echo ' ... neu erstellt';

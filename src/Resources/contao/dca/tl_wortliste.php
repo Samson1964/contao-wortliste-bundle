@@ -9,9 +9,9 @@
 
 
 /**
- * Table tl_schiedsrichter 
+ * Table tl_wortliste 
  */
-$GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
+$GLOBALS['TL_DCA']['tl_wortliste'] = array
 (
 	// Config
 	'config' => array
@@ -44,16 +44,16 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		(
 			'fields'                  => array('name', 'vorname', 'klasse', 'nr', 'ausbdat', 'prue_datum'),
 			'showColumns'             => true,
-			'label_callback'          => array('tl_schiedsrichter', 'convertDate') 
+			'label_callback'          => array('tl_wortliste', 'convertDate') 
 		),
 		'global_operations' => array
 		(
 			'import' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['import'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_wortliste']['import'],
 				'href'                => 'key=import',
-				'icon'                => 'bundles/contaoschiedsrichter/images/import.png',
-				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['tl_schiedsrichter']['import_confirm'] . '\'))return false;Backend.getScrollOffset()"',
+				'icon'                => 'bundles/contaowortliste/images/import.png',
+				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['tl_wortliste']['import_confirm'] . '\'))return false;Backend.getScrollOffset()"',
 			),
 			'all' => array
 			(
@@ -67,33 +67,33 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		(
 			'edit' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['edit'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_wortliste']['edit'],
 				'href'                => 'act=edit',
 				'icon'                => 'edit.gif'
 			),
 			'copy' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['copy'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_wortliste']['copy'],
 				'href'                => 'act=copy',
 				'icon'                => 'copy.gif',
 			),
 			'delete' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['delete'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_wortliste']['delete'],
 				'href'                => 'act=delete',
 				'icon'                => 'delete.gif',
 				'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
 			),
 			'toggle' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['toggle'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_wortliste']['toggle'],
 				'icon'                => 'visible.gif',
 				'attributes'          => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
-				'button_callback'     => array('tl_schiedsrichter', 'toggleIcon')
+				'button_callback'     => array('tl_wortliste', 'toggleIcon')
 			),
 			'show' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['show'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_wortliste']['show'],
 				'href'                => 'act=show',
 				'icon'                => 'show.gif'
 			)
@@ -105,7 +105,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		'default'                     => '{person_legend},anrede,titel,name,vorname,edited;{adresse_legend:hide},strasse,plz,ort;{kontakt_legend:hide},telefon,telefon2,email;{lizenz_legend:hide},klasse,nr,ausbdat,prue_datum;{verein_legend:hide},pkz,verein_kur;{diverses_legend:hide},rds_d,rds_k,dwz_d,dwz_k,sel;{fide_legend:hide},fide_id,country;{hinweise_legend:hide},bemerkung;{published_legend},published'
 	),
 
-	// Base fields in table tl_schiedsrichter
+	// Base fields in table tl_wortliste
 	'fields' => array
 	(
 		'id' => array
@@ -114,13 +114,13 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		),
 		'tstamp' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['tstamp'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['tstamp'],
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
 		// Letzte Änderung
 		'edited' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['edited'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['edited'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => false,
@@ -139,7 +139,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		// Anrede
 		'anrede' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['anrede'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['anrede'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -155,7 +155,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		// Vorname
 		'vorname' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['vorname'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['vorname'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -171,7 +171,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		// Nachname
 		'name' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['name'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['name'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -187,7 +187,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		// Titel
 		'titel' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['titel'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['titel'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -202,7 +202,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		// Straße
 		'strasse' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['strasse'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['strasse'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -217,7 +217,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		// PLZ
 		'plz' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['plz'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['plz'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -232,7 +232,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		// Ort
 		'ort' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['ort'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['ort'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -247,7 +247,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		// Email
 		'email' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['email'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['email'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -263,7 +263,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		// Telefon 1
 		'telefon' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['telefon'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['telefon'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -278,7 +278,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		// Telefon 2
 		'telefon2' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['telefon2'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['telefon2'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -293,7 +293,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		// PKZ
 		'pkz' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['pkz'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['pkz'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -308,7 +308,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		// Klasse
 		'klasse' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['klasse'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['klasse'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -324,7 +324,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		// NR
 		'nr' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['nr'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['nr'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -340,7 +340,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		// Ausbildungsdatum
 		'ausbdat' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['ausbdat'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['ausbdat'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -358,7 +358,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		// Prüfungsdatum 
 		'prue_datum' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['prue_datum'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['prue_datum'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -376,7 +376,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		// rds_d
 		'rds_d' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['rds_d'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['rds_d'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -392,7 +392,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		),
 		'rds_k' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['rds_k'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['rds_k'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -406,7 +406,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		),
 		'dwz_d' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['dwz_d'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['dwz_d'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -422,7 +422,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		),
 		'dwz_k' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['dwz_k'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['dwz_k'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -436,7 +436,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		),
 		'verein_kur' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['verein_kur'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['verein_kur'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -450,7 +450,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		),
 		'sel' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['sel'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['sel'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -464,7 +464,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		),
 		'fide_id' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['fide_id'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['fide_id'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -478,7 +478,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		),
 		'country' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['country'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['country'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'default'                 => true,
@@ -488,7 +488,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		),
 		'bemerkung' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['bemerkung'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['bemerkung'],
 			'inputType'               => 'textarea',
 			'exclude'                 => true,
 			'search'                  => true,
@@ -506,7 +506,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 		),
 		'published' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_schiedsrichter']['published'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['published'],
 			'inputType'               => 'checkbox',
 			'exclude'                 => true,
 			'default'                 => true,
@@ -517,7 +517,7 @@ $GLOBALS['TL_DCA']['tl_schiedsrichter'] = array
 	),
 );
 
-class tl_schiedsrichter extends \Backend
+class tl_wortliste extends \Backend
 {
 
 	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
@@ -531,7 +531,7 @@ class tl_schiedsrichter extends \Backend
 		}
 
 		// Check permissions AFTER checking the tid, so hacking attempts are logged
-		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_schiedsrichter::published', 'alexf'))
+		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_wortliste::published', 'alexf'))
 		{
 			return '';
 		}
@@ -549,18 +549,18 @@ class tl_schiedsrichter extends \Backend
 	public function toggleVisibility($intId, $blnPublished)
 	{
 		// Check permissions to publish
-		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_schiedsrichter::published', 'alexf'))
+		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_wortliste::published', 'alexf'))
 		{
-			$this->log('Kein Zugriffsrecht für Aktivierung Datensatz ID "'.$intId.'"', 'tl_schiedsrichter toggleVisibility', TL_ERROR);
+			$this->log('Kein Zugriffsrecht für Aktivierung Datensatz ID "'.$intId.'"', 'tl_wortliste toggleVisibility', TL_ERROR);
 			$this->redirect('contao/main.php?act=error');
 		}
 		
-		$this->createInitialVersion('tl_schiedsrichter', $intId);
+		$this->createInitialVersion('tl_wortliste', $intId);
 		
 		// Trigger the save_callback
-		if (is_array($GLOBALS['TL_DCA']['tl_schiedsrichter']['fields']['published']['save_callback']))
+		if (is_array($GLOBALS['TL_DCA']['tl_wortliste']['fields']['published']['save_callback']))
 		{
-			foreach ($GLOBALS['TL_DCA']['tl_schiedsrichter']['fields']['published']['save_callback'] as $callback)
+			foreach ($GLOBALS['TL_DCA']['tl_wortliste']['fields']['published']['save_callback'] as $callback)
 			{
 				$this->import($callback[0]);
 				$blnPublished = $this->$callback[0]->$callback[1]($blnPublished, $this);
@@ -568,9 +568,9 @@ class tl_schiedsrichter extends \Backend
 		}
 		
 		// Update the database
-		$this->Database->prepare("UPDATE tl_schiedsrichter SET tstamp=". time() .", published='" . ($blnPublished ? '' : '1') . "' WHERE id=?")
+		$this->Database->prepare("UPDATE tl_wortliste SET tstamp=". time() .", published='" . ($blnPublished ? '' : '1') . "' WHERE id=?")
 					   ->execute($intId);
-		$this->createNewVersion('tl_schiedsrichter', $intId);
+		$this->createNewVersion('tl_wortliste', $intId);
 	}
 
 	/**
