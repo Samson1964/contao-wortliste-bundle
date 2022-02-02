@@ -24,9 +24,37 @@ $GLOBALS['TL_DCA']['tl_wortliste'] = array
 			'keys' => array
 			(
 				'id'             => 'primary',
-				'klasse'         => 'index',
-				'nr'             => 'index',
-				'name'           => 'index'
+				'wort'           => 'index',
+				'wort'           => 'unique',
+				'char_65'        => 'index', // A
+				'char_66'        => 'index', // B
+				'char_67'        => 'index', // C
+				'char_68'        => 'index', // D
+				'char_69'        => 'index', // E
+				'char_70'        => 'index', // F
+				'char_71'        => 'index', // G
+				'char_72'        => 'index', // H
+				'char_73'        => 'index', // I
+				'char_74'        => 'index', // J
+				'char_75'        => 'index', // K
+				'char_76'        => 'index', // L
+				'char_77'        => 'index', // M
+				'char_78'        => 'index', // N
+				'char_79'        => 'index', // O
+				'char_80'        => 'index', // P
+				'char_81'        => 'index', // Q
+				'char_82'        => 'index', // R
+				'char_83'        => 'index', // S
+				'char_84'        => 'index', // T
+				'char_85'        => 'index', // U
+				'char_86'        => 'index', // V
+				'char_87'        => 'index', // W
+				'char_88'        => 'index', // X
+				'char_89'        => 'index', // Y
+				'char_90'        => 'index', // Z
+				'char_196'       => 'index', // Ä
+				'char_214'       => 'index', // Ö
+				'char_220'       => 'index', // Ü
 			)
 		)
 	),
@@ -36,15 +64,14 @@ $GLOBALS['TL_DCA']['tl_wortliste'] = array
 		'sorting' => array
 		(
 			'mode'                    => 2,
-			'fields'                  => array('name ASC', 'vorname ASC'),
+			'fields'                  => array('wort ASC'),
 			'flag'                    => 11,
 			'panelLayout'             => 'filter;search,sort,limit',
 		),
 		'label' => array
 		(
-			'fields'                  => array('name', 'vorname', 'klasse', 'nr', 'ausbdat', 'prue_datum'),
-			'showColumns'             => true,
-			'label_callback'          => array('tl_wortliste', 'convertDate') 
+			'fields'                  => array('wort'),
+			'showColumns'             => true
 		),
 		'global_operations' => array
 		(
@@ -52,8 +79,7 @@ $GLOBALS['TL_DCA']['tl_wortliste'] = array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_wortliste']['import'],
 				'href'                => 'key=import',
-				'icon'                => 'bundles/contaowortliste/images/import.png',
-				'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['tl_wortliste']['import_confirm'] . '\'))return false;Backend.getScrollOffset()"',
+				'icon'                => 'bundles/contaowortliste/images/import.png'
 			),
 			'all' => array
 			(
@@ -102,7 +128,7 @@ $GLOBALS['TL_DCA']['tl_wortliste'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{person_legend},anrede,titel,name,vorname,edited;{adresse_legend:hide},strasse,plz,ort;{kontakt_legend:hide},telefon,telefon2,email;{lizenz_legend:hide},klasse,nr,ausbdat,prue_datum;{verein_legend:hide},pkz,verein_kur;{diverses_legend:hide},rds_d,rds_k,dwz_d,dwz_k,sel;{fide_legend:hide},fide_id,country;{hinweise_legend:hide},bemerkung;{published_legend},published'
+		'default'                     => '{wort_legend},wort,anzahl;{publish_legend},published'
 	),
 
 	// Base fields in table tl_wortliste
@@ -114,395 +140,65 @@ $GLOBALS['TL_DCA']['tl_wortliste'] = array
 		),
 		'tstamp' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['tstamp'],
 			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
-		// Letzte Änderung
-		'edited' => array
+		// Wort
+		'wort' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['edited'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => false,
-			'sorting'                 => true,
-			'flag'                    => 8,
-			'filter'                  => false,
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50 wizard',
-				'rgxp'                => 'date',
-				'datepicker'          => true
-			),
-			'sql'                     => "int(10) unsigned NOT NULL default '0'" 
-		),
-		// Vorname
-		// Anrede
-		'anrede' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['anrede'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['wort'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
 			'sorting'                 => true,
 			'filter'                  => false,
-			'sql'                     => "varchar(26) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'mandatory'           => false,
-				'tl_class'            => 'w50'
-			)
-		),
-		// Vorname
-		'vorname' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['vorname'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "varchar(30) NOT NULL default ''",
+			'load_callback'           => array(array('tl_wortliste','loadWord')),
+			'save_callback'           => array(array('tl_wortliste','saveWord')),
 			'eval'                    => array
 			(
 				'mandatory'           => true,
-				'tl_class'            => 'w50'
-			)
+				'maxlength'           => 60,
+				'nospace'             => true,
+				'rgxp'                => 'alpha',
+				'unique'              => true,
+				'tl_class'            => 'long'
+			),
+			'sql'                     => "varchar(60) NOT NULL default ''",
 		),
-		// Nachname
-		'name' => array
+		'anzahl' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['name'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['anzahl'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
 			'sorting'                 => true,
 			'filter'                  => false,
-			'sql'                     => "varchar(30) NOT NULL default ''",
 			'eval'                    => array
 			(
 				'mandatory'           => true,
+				'maxlength'           => 3,
+				'nospace'             => true,
+				'rgxp'                => 'digit',
 				'tl_class'            => 'w50'
-			)
-		),
-		// Titel
-		'titel' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['titel'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "varchar(22) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50'
-			)
-		),
-		// Straße
-		'strasse' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['strasse'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "varchar(30) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50'
-			)
-		),
-		// PLZ
-		'plz' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['plz'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "varchar(10) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50 clr'
-			)
-		),
-		// Ort
-		'ort' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['ort'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "varchar(30) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50'
-			)
-		),
-		// Email
-		'email' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['email'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "varchar(50) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'rgxp'                => 'email',
-				'tl_class'            => 'w50'
-			)
-		),
-		// Telefon 1
-		'telefon' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['telefon'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "varchar(30) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50'
-			)
-		),
-		// Telefon 2
-		'telefon2' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['telefon2'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "varchar(30) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50'
-			)
-		),
-		// PKZ
-		'pkz' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['pkz'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "varchar(9) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50',
-			)
-		),
-		// Klasse
-		'klasse' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['klasse'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => true,
-			'sql'                     => "varchar(3) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'mandatory'           => false,
-				'tl_class'            => 'w50'
-			)
-		),
-		// NR
-		'nr' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['nr'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "varchar(8) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'mandatory'           => false,
-				'tl_class'            => 'w50'
-			)
-		),
-		// Ausbildungsdatum
-		'ausbdat' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['ausbdat'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'flag'                    => 8,
-			'filter'                  => true,
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50 wizard',
-				'rgxp'                => 'date',
-				'datepicker'          => true
 			),
-			'sql'                     => "int(10) unsigned NOT NULL default '0'" 
+			'sql'                     => "int(3) unsigned NOT NULL default '0'"
 		),
-		// Prüfungsdatum 
-		'prue_datum' => array
+		'wert' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['prue_datum'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['wert'],
 			'inputType'               => 'text',
 			'exclude'                 => true,
 			'search'                  => true,
 			'sorting'                 => true,
-			'flag'                    => 8,
 			'filter'                  => false,
 			'eval'                    => array
 			(
-				'tl_class'            => 'w50 wizard',
-				'rgxp'                => 'date',
-				'datepicker'          => true
+				'mandatory'           => true,
+				'maxlength'           => 4,
+				'nospace'             => true,
+				'rgxp'                => 'digit',
+				'tl_class'            => 'w50'
 			),
-			'sql'                     => "int(10) unsigned NOT NULL default '0'" 
-		),
-		// rds_d
-		'rds_d' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['rds_d'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "varchar(10) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50 wizard',
-				'rgxp'                => 'date',
-				'datepicker'          => true
-			)
-		),
-		'rds_k' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['rds_k'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "varchar(1) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50'
-			)
-		),
-		'dwz_d' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['dwz_d'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "varchar(10) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50 wizard',
-				'rgxp'                => 'date',
-				'datepicker'          => true
-			)
-		),
-		'dwz_k' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['dwz_k'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "varchar(10) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50'
-			)
-		),
-		'verein_kur' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['verein_kur'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "varchar(4) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50'
-			)
-		),
-		'sel' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['sel'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "varchar(20) NOT NULL default ''",
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50'
-			)
-		),
-		'fide_id' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['fide_id'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => true,
-			'filter'                  => false,
-			'sql'                     => "int(11) unsigned NOT NULL default '0'",
-			'eval'                    => array
-			(
-				'tl_class'            => 'w50'
-			)
-		),
-		'country' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['country'],
-			'inputType'               => 'text',
-			'exclude'                 => true,
-			'default'                 => true,
-			'filter'                  => true,
-			'eval'                    => array('tl_class' => 'w50','isBoolean' => true),
-			'sql'                     => "char(1) NOT NULL default ''"
-		),
-		'bemerkung' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_wortliste']['bemerkung'],
-			'inputType'               => 'textarea',
-			'exclude'                 => true,
-			'search'                  => true,
-			'sorting'                 => false,
-			'filter'                  => false,
-			'eval'                    => array
-			(
-				'tl_class'            => 'long',
-				'rte'                 => 'tinyMCE', 
-				'cols'                => 80,
-				'rows'                => 5, 
-				'style'               => 'height: 80px'
-			),
-			'sql'                     => "text NULL"
+			'sql'                     => "int(4) unsigned NOT NULL default '0'"
 		),
 		'published' => array
 		(
@@ -511,9 +207,43 @@ $GLOBALS['TL_DCA']['tl_wortliste'] = array
 			'exclude'                 => true,
 			'default'                 => true,
 			'filter'                  => true,
-			'eval'                    => array('tl_class' => 'w50','isBoolean' => true),
+			'eval'                    => array
+			(
+				'tl_class'            => 'w50',
+				'isBoolean'           => true
+			),
 			'sql'                     => "char(1) NOT NULL default ''"
 		),
+		// Anzahl der Buchstaben im Wort
+		'char_65' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // A
+		'char_66' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // B
+		'char_67' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // C
+		'char_68' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // D
+		'char_69' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // E
+		'char_70' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // F
+		'char_71' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // G
+		'char_72' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // H
+		'char_73' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // I
+		'char_74' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // J
+		'char_75' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // K
+		'char_76' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // L
+		'char_77' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // M
+		'char_78' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // N
+		'char_79' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // O
+		'char_80' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // P
+		'char_81' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // Q
+		'char_82' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // R
+		'char_83' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // S
+		'char_84' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // T
+		'char_85' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // U
+		'char_86' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // V
+		'char_87' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // W
+		'char_88' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // X
+		'char_89' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // Y
+		'char_90' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // Z
+		'char_196' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // Ä
+		'char_214' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // Ö
+		'char_220' => array('sql'      => "int(1) unsigned NOT NULL default 0"), // Ü
 	),
 );
 
@@ -569,27 +299,21 @@ class tl_wortliste extends \Backend
 		
 		// Update the database
 		$this->Database->prepare("UPDATE tl_wortliste SET tstamp=". time() .", published='" . ($blnPublished ? '' : '1') . "' WHERE id=?")
-					   ->execute($intId);
+		               ->execute($intId);
 		$this->createNewVersion('tl_wortliste', $intId);
 	}
 
-	/**
-	 * Add an image to each record
-	 * @param array         $row (Assoziatives Array mit allen Werten des aktuellen Datensatzes)
-	 * @param string        $label (Wert des erstes sichtbaren Wertes des aktuellen Datensatzes)
-	 * @param DataContainer $dc
-	 * @param array         $args (Numerisches Array mit den sichtbaren Werten des aktuellen Datensatzes)
-	 *
-	 * @return array
-	 */
-	public function convertDate($row, $label, DataContainer $dc, $args)
+	public function loadWord($varValue, DataContainer $dc)
 	{
+		return $varValue;
+	}
 
-		for($x=0;$x<count($args);$x++)
-		{
-			$args[$x] = \Schachbulle\ContaoHelperBundle\Classes\Helper::getDate($args[$x]);
-		}
-		return $args; 
-	} 
-	
+	public function saveWord($varValue, DataContainer $dc)
+	{
+		$varValue = str_replace(array('.', '-', 'ä', 'ö', 'ü', 'ß'), array('', '', 'Ä', 'Ö', 'Ü', 'SS'), $varValue);
+		$varValue = strtoupper($varValue);
+		
+		return $varValue;
+	}
+
 }

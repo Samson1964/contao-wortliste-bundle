@@ -2,28 +2,36 @@
 
 <?php $this->block('content'); ?>
 
-<table>
-	<thead>
+<?php if($this->debug): ?>
+	<pre>
+	<?php print_r($this->debug); ?>
+	</pre>
+<?php endif; ?>
+
+<?= $this->form ?>
+
+<?php if($this->Buchstaben): ?>
+	<div>Gesuchte Buchstaben: <b><?= $this->Buchstaben ?></b> (<?= $this->BuchstabenASCII ?>)</div>
+	<?= $this->SQL ?>
+<?php endif; ?>
+
+<?php if($this->result): ?>
+	<div>
+	<table>
 	<tr>
-		<th class="head col_first">Nachname</th>
-		<th class="head">Vorname</th>
-		<th class="head">Ort</th>
-		<th class="head">Lizenz</th>
-		<th class="head col_last">Letzte Änderung</th>
+		<th>Wort</th>
+		<th>Wert</th>
+		<th>Debug</th>
 	</tr>
-	</thead>
-	<tbody>
-	<?php foreach($this->daten as $item): ?>
-	<?php if($class == 'odd') $class = 'even'; ?>
-	<tr class="<?= $class ?>">
-		<td class="body col_0"><?= $item['nachname'] ?></td>
-		<td class="body col_1"><?= $item['vorname'] ?></td>
-		<td class="body col_2"><?= $item['ort'] ?></td>
-		<td class="body col_3"><?= $item['lizenz'] ?></td>
-		<td class="body col_4"><?= $item['datum'] ?></td>
-	</tr>
+	<?php foreach($this->result as $item): ?>
+		<tr>
+			<td><?= $item['anzeigewort'] ?></td>
+			<td><?= $item['wortwert'] ?></td>
+			<td><?= $item['asciiwort'] ?></td>
+		</tr>
 	<?php endforeach; ?>
-	</tbody>
-</table>
+	</table>
+	</div>
+<?php endif; ?>
 
 <?php $this->endblock(); ?>
